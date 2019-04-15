@@ -142,3 +142,7 @@ print("items of b:")
 b.getitem()
 a.matrix_multiplication(b)
 print(a.transpose())
+
+
+
+#Tankyoy:)
