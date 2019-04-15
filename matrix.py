@@ -28,20 +28,17 @@
     #set element of the matrix
     def setitem(self, col, row, v):
         self.matrix[col-1][row-1] = v
-    
-    
+        
     #get element of the matrix
     def getitem(self, col, row):
         return self.matrix[col-1][row-1]
- 
-
+     
     #add number to any element of the matrix
     def add_to_single_element(self, col, row,w):
         a = self.matrix[col-1][row-1]
         b = w + float(a)
         return b
-  
-
+      
     #add a number to matrix elements
     def add(self):
         out = ""
@@ -69,9 +66,7 @@
                 print(b)
                 out += 'Row %s = %s\n' % ((j+1), b)
         return out
-
-
-
+       
     #matrix multiplication (dot product)
     def matrix_multiplication(self,other):
         z = self.rows
@@ -100,7 +95,6 @@
                         #print(c)
                         s += c
                     print('row %s.%s = %s\n' %(i+1,j+1, s))     
-
     
     #make the transpose of the inpute matrix
     def transpose(self):
@@ -112,37 +106,35 @@
                 b = result.matrix[j][i]
                 #print(b)
                 print('row %s.%s = %s\n' %(j+1,i+1, b)) 
-       
-                
-                
-                    
-                      
-                      
+                             
 a = Matrix(3,4,0)
 b = Matrix(4,5,0)
-
 print(a)
 print(b)
-a.setitem(2,3,'55.75')
+
+a.setitem(2,3,55.75)
 print(a)
+
 b.setitem(2,4,2)
 print(b)
 
-a.setitem(2,2,'19')
+a.setitem(2,2,19)
 print(a)
-b.transpose()
-print (a.getitem(2,2))
-print(b.add_to_single_element(2,4,5))
-print(b.add())
-print(b.mul())
 
 print("items of a :")
-a.getitem(b)
-print("items of b:")
-b.getitem()
+print (a.getitem(2,2))
+
+print("items of b :")
+print (b.getitem(2,2))
+
+print(b.add_to_single_element(2,4,5))
+
+print(b.add())
+
+print(b.mul())
+
 a.matrix_multiplication(b)
-print(a.transpose())
 
-
+a.transpose()
 
 #Tankyoy:)
