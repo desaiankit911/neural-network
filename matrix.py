@@ -1,10 +1,15 @@
- class Matrix:
+import math
+import random
+
+#sigmoid function
+def sigmoid(x):
+    return 1/(1+math.exp( -x ))
+
+class Matrix:
     def __init__(self, rows, cols,add):
         self.rows = rows
         self.cols = cols
         
-        print(self.rows)
-        print(self.cols)
         self.matrix = []
         print()
         #z = input()
@@ -15,7 +20,8 @@
                    # ea_row.append(z)
                # else:
                    #  ea_row.append(int(z))
-                ea_row.append(1)      
+                
+                ea_row.append(0)      
             self.matrix.append(ea_row)
  
     #draw the matrix
@@ -25,48 +31,74 @@
             outStr += 'Row %s = %s\n' % (i+1, self.matrix[i])
         return outStr
     
+    #giving the random numbers for matrix
+    def randomise(self):
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.matrix[i][j] = random.random()
+        return self
+    
     #set element of the matrix
     def setitem(self, col, row, v):
         self.matrix[col-1][row-1] = v
-        
+    
+    
     #get element of the matrix
     def getitem(self, col, row):
         return self.matrix[col-1][row-1]
-     
+ 
+
     #add number to any element of the matrix
     def add_to_single_element(self, col, row,w):
         a = self.matrix[col-1][row-1]
         b = w + float(a)
         return b
-      
-    #add a number to matrix elements
-    def add(self):
-        out = ""
-        print("add to matrix :")
-        l = input()
-        
+  
+  #add a number to matrix elements
+    def add(self,other):
+        result = Matrix(self.rows,other.cols,0)
         for i in range(self.rows):
             for j in range(self.cols):
-                b = self.matrix[i][j] 
-                b = float(b)+float(l)
-                print(b)
-                out += 'Row %s = %s\n' % ((j+1), b)
-        return out
-    
+                a = self.matrix[i][j]
+                b = other.matrix[i][j]
+                c = float(a)+float(b)
+                result.matrix[i][j] = c
+        return result
+
     #multiply matrix elements by a particular number(scalar product)
-    def mul(self):
-        out = ""
-        print("mul to matrix :")
-        l = input()
-        
+   
+    def mul(self,other):
+        result = Matrix(self.rows,other.cols,0)
         for i in range(self.rows):
             for j in range(self.cols):
-                b = self.matrix[i][j] 
-                b = float(b)*float(l)
-                print(b)
-                out += 'Row %s = %s\n' % ((j+1), b)
-        return out
-       
+                a = self.matrix[i][j]
+                b = other.matrix[i][j]
+                c = float(a) * float(b)
+                result.matrix[i][j] = c
+        return result
+        
+    
+    #converting input matrix to the form of vector
+    @staticmethod
+    def fromArray(array):
+        m = Matrix(len(array),1,0)
+        for i in range(len(array)):
+            m.matrix[i][0] = array[i]
+        return m
+    
+    
+    def toarray(self):
+        arr = []
+        #a = self.rows
+        #b = self.cols
+        #print(a)
+        #print(b)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                arr.append(self.matrix[i][j])
+                #print(arr)
+        return arr
+        
     #matrix multiplication (dot product)
     def matrix_multiplication(self,other):
         z = self.rows
@@ -77,13 +109,8 @@
         if q != w:
             print("column of 1st matrix must match rows of 2nd matrix")
         else:
-            print(z)
-            print(q)
-            print(w)
-            print(y)
-
+            result = Matrix(self.rows,other.cols,0)
             for i in range(z):
-
                 for j in range(y):
                     s = 0
                     e = 0
@@ -94,47 +121,66 @@
                         c = float(a) * float(b)
                         #print(c)
                         s += c
-                    print('row %s.%s = %s\n' %(i+1,j+1, s))     
-    
+                        
+                    result.matrix[i][j] = s
+            return result
+  
     #make the transpose of the inpute matrix
     def transpose(self):
         result = Matrix(self.cols,self.rows,0)
         for i in range(self.rows):
             for j in range(self.cols):
-                a = self.matrix[i][j]
-                result.matrix[j][i] = float(a)
-                b = result.matrix[j][i]
-                #print(b)
-                print('row %s.%s = %s\n' %(j+1,i+1, b)) 
-                             
-a = Matrix(3,4,0)
-b = Matrix(4,5,0)
-print(a)
-print(b)
+                 result.matrix[j][i] = self.matrix[i][j]
+        return result
+                
+    #mapping the sigmoid function            
+    def map(self,func): 
+        for i in range(self.rows):
+            for j in range(self.cols):
+                val =  self.matrix[i][j]
+                self.matrix[i][j] = func(val)
 
-a.setitem(2,3,55.75)
-print(a)
+#a = Matrix(3,4,0)
+#b = Matrix(4,5,0)
+#print(a)
+#print(b)
 
-b.setitem(2,4,2)
-print(b)
+#Matrix.mult(a,b)
 
-a.setitem(2,2,19)
-print(a)
+#z = b.randomise()
+#print(z)
 
-print("items of a :")
-print (a.getitem(2,2))
+#a.setitem(2,3,5.75)
+#print(a)
+#b.setitem(2,4,2)
+#print(b)
+#a.setitem(2,2,19)
+#print(a)
 
-print("items of b :")
-print (b.getitem(2,2))
+#a =a.transpose()
+#print(a)
 
-print(b.add_to_single_element(2,4,5))
+#print("items of a :")
+#print (a.getitem(2,2))
+#print("items of b :")
+#print (b.getitem(2,2))
 
-print(b.add())
+#print(b.add_to_single_element(2,4,5))
 
-print(b.mul())
+#z = a.add(1)
+#print(z)
 
-a.matrix_multiplication(b)
+#y = a.mul(3)
+#print(y)
 
-a.transpose()
+#array =[1,2,3]
+#print(array)
+#Matrix.fromArray(array)
 
-#Tankyoy:)
+#z = a.matrix_multiplication(b)
+#print(z)
+
+#b.map(sigmoid)
+#print(b)
+
+#Thankyou :)
