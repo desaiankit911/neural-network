@@ -5,6 +5,8 @@ import random
 def sigmoid(x):
     return 1/(1+math.exp( -x ))
 
+def dsigmoid(y):
+    return y * (1 - y)
 class Matrix:
     def __init__(self, rows, cols,add):
         self.rows = rows
@@ -49,10 +51,43 @@ class Matrix:
  
 
     #add number to any element of the matrix
-    def add_to_single_element(self, col, row,w):
+    def addition(self, col, row,w):
         a = self.matrix[col-1][row-1]
-        b = w + float(a)
+        b = float(w) + float(a)
         return b
+    
+    #add number to any element of the matrix
+    def pluse(self,w):
+        #a = self.matrix[][row-1]
+        result = Matrix(self.rows,self.cols,0)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                a = self.matrix[i][j]
+                b = float(w) + float(a)
+                result.matrix[i][j] = b
+        return result
+    
+    #multiply number to any element of the matrix
+    def multiplication(self,w):
+         #a = self.matrix[][row-1]
+        result = Matrix(self.rows,self.cols,0)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                a = self.matrix[i][j]
+                b = float(w) * float(a)
+                result.matrix[i][j] = b
+        return result
+    
+    @staticmethod
+    def sub(self,other):
+        result = Matrix(self.rows,other.cols,0)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                a = self.matrix[i][j]
+                b = other.matrix[i][j]
+                c = float(a) - float(b)
+                result.matrix[i][j] = c
+        return result
   
   #add a number to matrix elements
     def add(self,other):
@@ -65,8 +100,7 @@ class Matrix:
                 result.matrix[i][j] = c
         return result
 
-    #multiply matrix elements by a particular number(scalar product)
-   
+   #hadamard multiplication of matrix
     def mul(self,other):
         result = Matrix(self.rows,other.cols,0)
         for i in range(self.rows):
@@ -76,6 +110,15 @@ class Matrix:
                 c = float(a) * float(b)
                 result.matrix[i][j] = c
         return result
+    
+    @staticmethod
+    def map(mat,func):
+        result = Matrix(self.rows,other.cols,0)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                val = mat.matrix[i][j]
+                result.matrix[i][j] = func(val)
+        
         
     
     #converting input matrix to the form of vector
@@ -100,6 +143,7 @@ class Matrix:
         return arr
         
     #matrix multiplication (dot product)
+    @staticmethod
     def matrix_multiplication(self,other):
         z = self.rows
         q = self.cols
@@ -126,11 +170,13 @@ class Matrix:
             return result
   
     #make the transpose of the inpute matrix
+    #@staticmethod
     def transpose(self):
         result = Matrix(self.cols,self.rows,0)
         for i in range(self.rows):
             for j in range(self.cols):
-                 result.matrix[j][i] = self.matrix[i][j]
+                #print(self.matrix[i][j])
+                result.matrix[j][i] = self.matrix[i][j]
         return result
                 
     #mapping the sigmoid function            
@@ -157,7 +203,7 @@ class Matrix:
 #a.setitem(2,2,19)
 #print(a)
 
-#a =a.transpose()
+#a = a.transpose()
 #print(a)
 
 #print("items of a :")
@@ -167,20 +213,30 @@ class Matrix:
 
 #print(b.add_to_single_element(2,4,5))
 
-#z = a.add(1)
+#c = Matrix(3,1,0)
+#d = Matrix(3,1,0)
+#print(c)
+#print(d)
+#z = Matrix.sub(c,d)
 #print(z)
 
-#y = a.mul(3)
+#z = a.pluse(1)
+#print(z)
+
+#y = a.add(b)
+#print(y)
+
+#c = a.multiplication(2)
+#print(c)
+#y = a.mul(b)
 #print(y)
 
 #array =[1,2,3]
 #print(array)
 #Matrix.fromArray(array)
 
-#z = a.matrix_multiplication(b)
+#Matrix.matrix_multiplication(a, b)
 #print(z)
 
 #b.map(sigmoid)
 #print(b)
-
-#Thankyou :)
