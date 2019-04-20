@@ -1,5 +1,4 @@
 from matrix import *
-
 class NeuralNetwork:
     def __init__(self,input_nodes, hidden_nodes, output_nodes):
         self.input_nodes = input_nodes
@@ -94,6 +93,11 @@ class NeuralNetwork:
         ho = self.weights_ho.add(weight_ho_delta)
         #print(ho)
         
+        c = self.bias_o.add(g)
+        #print(c)
+        
+        
+        
         #(who_t = transpose of weight_ho)
         who_t = Matrix.transpose(ho)
         
@@ -110,6 +114,8 @@ class NeuralNetwork:
         hg = hg.multiplication(self.lr)
         #print(hg)
         
+        
+
         #print(inputs)
         inputs_T = inputs.transpose()
         #print(inputs_T)
@@ -120,16 +126,8 @@ class NeuralNetwork:
         l = self.weights_ih.add(ih)
         #print(l)
         
+        self.bias_h.add(hg)
+        
         #print(outputs)
         #print(targets)
         #print(output_error)
-        
-nn = NeuralNetwork(2,2,1)
-inputs = [1,0]
-targets = [1]
-
-nn.train(inputs, targets)
-
-#print(outpute)
-
-Tankyou :)
